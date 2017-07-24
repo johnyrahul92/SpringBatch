@@ -1,9 +1,10 @@
-package com.onlinetechvision.exe;
+package main.java.com.onlinetechvision.exe;
 
+import main.java.com.onlinetechvision.spring.batch.BatchProcessStarter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.onlinetechvision.spring.batch.BatchProcessStarter;
+
 
 /**
  * Application Class starts the application.

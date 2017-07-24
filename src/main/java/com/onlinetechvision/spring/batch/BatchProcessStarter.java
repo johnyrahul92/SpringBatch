@@ -1,4 +1,4 @@
-package com.onlinetechvision.spring.batch;
+package main.java.com.onlinetechvision.spring.batch;
 
 import org.apache.log4j.Logger;
 import org.springframework.batch.core.Job;
@@ -10,6 +10,8 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * BatchProcessStarter Class launches the jobs and logs their execution results.
@@ -19,14 +21,21 @@ import org.springframework.batch.core.repository.JobRestartException;
  * @version 1.0.0
  *
  */
+
+@Component("batchProcessStarter")
 public class BatchProcessStarter {
 
 	private static final Logger logger = Logger.getLogger(BatchProcessStarter.class);
 	
+	@Autowired
 	private Job firstJob;
+	@Autowired
 	private Job secondJob;
-	private Job thirdJob;
+	/*@Autowired
+	private Job thirdJob;*/
+	@Autowired
 	private JobLauncher jobLauncher;
+	@Autowired
 	private JobRepository jobRepository;
 
 	/**
@@ -38,17 +47,17 @@ public class BatchProcessStarter {
 		JobParametersBuilder builder = new JobParametersBuilder();
 		
 		try {
-			getJobLauncher().run(getFirstJob(), builder.toJobParameters());
-			jobExecution = getJobRepository().getLastJobExecution(getFirstJob().getName(), builder.toJobParameters());
-			logger.debug(jobExecution.toString());			
+			jobLauncher.run(firstJob, builder.toJobParameters());
+			jobExecution = jobRepository.getLastJobExecution(firstJob.getName(), builder.toJobParameters());
+			logger.debug(jobExecution.toString());
 	
-			getJobLauncher().run(getSecondJob(), builder.toJobParameters());
-			jobExecution = getJobRepository().getLastJobExecution(getSecondJob().getName(), builder.toJobParameters());
+			jobLauncher.run(secondJob, builder.toJobParameters());
+			jobExecution = jobRepository.getLastJobExecution(secondJob.getName(), builder.toJobParameters());
 			logger.debug(jobExecution.toString());
 			
-			getJobLauncher().run(getThirdJob(), builder.toJobParameters());
+			/*getJobLauncher().run(getThirdJob(), builder.toJobParameters());
 			jobExecution = getJobRepository().getLastJobExecution(getThirdJob().getName(), builder.toJobParameters());
-			logger.debug(jobExecution.toString());
+			logger.debug(jobExecution.toString());*/
 		
 		} catch (JobExecutionAlreadyRunningException 
 					| JobRestartException
@@ -59,44 +68,6 @@ public class BatchProcessStarter {
 			
 	}	
 
-	public Job getFirstJob() {
-		return firstJob;
-	}
-	
-	public void setFirstJob(Job firstJob) {
-		this.firstJob = firstJob;
-	}
-	
-	public Job getSecondJob() {
-		return secondJob;
-	}
 
-	public void setSecondJob(Job secondJob) {
-		this.secondJob = secondJob;
-	}	
-
-	public Job getThirdJob() {
-		return thirdJob;
-	}
-
-	public void setThirdJob(Job thirdJob) {
-		this.thirdJob = thirdJob;
-	}
-
-	public JobLauncher getJobLauncher() {
-		return jobLauncher;
-	}
-
-	public void setJobLauncher(JobLauncher jobLauncher) {
-		this.jobLauncher = jobLauncher;
-	}
-
-	public JobRepository getJobRepository() {
-		return jobRepository;
-	}
-
-	public void setJobRepository(JobRepository jobRepository) {
-		this.jobRepository = jobRepository;
-	}	
 	
 }

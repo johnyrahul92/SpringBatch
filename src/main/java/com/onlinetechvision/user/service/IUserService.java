@@ -2,6 +2,7 @@ package com.onlinetechvision.user.service;
 
 import java.util.List;
 
+import com.onlinetechvision.model.CityDo;
 import com.onlinetechvision.user.User;
  
 /**
@@ -28,4 +29,8 @@ public interface IUserService {
      * @return List - User list
      */
     List<User> getUsers();
+
+    void addCity(CityDo cityDo);
+
+
 }

@@ -2,6 +2,7 @@ package com.onlinetechvision.user.dao;
 
 import java.util.List;
 
+import com.onlinetechvision.model.CityDo;
 import com.onlinetechvision.user.User;
  
 /**
@@ -26,4 +27,6 @@ public interface IUserDAO {
      *
      */
     List<User> getUsers();
+
+    void addCity(CityDo cityDo);
 }
